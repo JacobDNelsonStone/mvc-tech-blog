@@ -1,0 +1,17 @@
+[
+  {
+    "post_title": "Talking about MVCs",
+    "post_text": "MVC file structure can be a great way to divide up work efficiently.",
+    "post_date": "5-8-2023"
+  },
+  {
+    "post_title": "Using models in a ORM",
+    "post_text": "Models and classes are great, and object oriented programming has many upsides.",
+    "post_date": "5-8-2023"
+  },
+  {
+    "post_title": "Handlebars PROS",
+    "post_text": "Handlebars can be a good way to write a website with html variables that can be interchanged.",
+    "post_date": "5-8-2023"
+  }
+]
