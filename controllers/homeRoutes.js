@@ -7,9 +7,10 @@ router.get('/', async (req, res) => {
   console.log('hi')
   try {
     const postData = await Post.findAll({
-      include: [{ model: User ,
-      attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
+      include: [{
+        model: User,
+        attributes: { exclude: ['password'] },
+        order: [['name', 'ASC']],
       }]
     });
     console.log(postData)
@@ -23,6 +24,30 @@ router.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+router.get('/dashboard', async (req, res) => {
+  console.log('route seen');
+  try {
+    const userData = await User.findAll({
+
+      attributes: { exclude: ['password'] },
+      order: [['name', 'ASC']],
+
+    });
+    console.log(userData)
+    const users = userData.map((post) => post.get({ plain: true }));
+    console.log(users);
+    res.render('homepage', {
+      layout: 'dashboard',
+      users,
+      // Pass the logged in flag to the template
+      // logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+  console.log(err)
+  res.status(500).json(err);
+}
 });
 
 router.get('/login', (req, res) => {
