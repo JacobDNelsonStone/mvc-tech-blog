@@ -15,7 +15,16 @@
           <p>Posted On: {{post.post_date}}</p>
         </div>
         <div class="card card-footer">
-          <h3><button data-id={{post.id}} class="btn btn-primary w-100 commentsTag">Show Comments</button></h3>
+          {{> comments}}
+          <form class="form login-form">
+            <div class="form-group">
+              <label for="comment-form">Comment:</label>
+              <input name="comment-body" class="form-input" type="text" placeholder="comment text goes here" />
+              <div class="form-group">
+                <button id="commentButton" class="btn btn-primary" type="submit">Comment</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
