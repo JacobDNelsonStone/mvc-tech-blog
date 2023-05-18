@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { User, Post, Comments } = require('../models');
 const withAuth = require('../utils/auth');
 
-// Prevent non logged in users from viewing the homepage
 router.get('/', async (req, res) => {
   console.log('hi')
   try {
@@ -11,7 +10,11 @@ router.get('/', async (req, res) => {
         model: User,
         attributes: { exclude: ['password'] },
         order: [['name', 'ASC']],
-      }],
+      },
+      {      
+        model: Comments
+      }  
+      ],
     });
     console.log(postData)
 
@@ -19,21 +22,21 @@ router.get('/', async (req, res) => {
     
     console.log(posts);
 
-    const commentData = await Comments.findAll({
-      include: [{
-        model: User,
-        attributes: { exclude: ['password'] },
-        order: [['name', 'ASC']],
-      }]
-    });
-    console.log(commentData)
+    // const commentData = await Comments.findAll({
+    //   include: [{
+    //     model: User,
+    //     attributes: { exclude: ['password'] },
+    //     order: [['name', 'ASC']],
+    //   }]
+    // });
+    // console.log(commentData)
 
-    const comments = commentData.map((comment) => comment.get({ plain: true }));
+    // const commentss = commentData.map((comment) => comment.get({ plain: true }));
     
-    console.log(comments);
+    // console.log(commentss);
     res.render('homepage', {
       posts,
-      comments
+      // commentss
       // Pass the logged in flag to the template
       // logged_in: req.session.logged_in,
     });
@@ -42,18 +45,24 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   console.log('route seen');
   try {
-    const userData = await User.findAll({
-
+    const userData = await User.findOne({
+      where: {id: req.session.user_id},
+      include: [{
+        model: Post
+      }],
       attributes: { exclude: ['password'] },
       order: [['name', 'ASC']],
 
     });
     console.log(userData)
-    const users = userData.map((post) => post.get({ plain: true }));
+
+    const users = userData.get({ plain: true });
+
     console.log(users);
+
     res.render('newpost', {
       layout: 'dashboard',
       users,
