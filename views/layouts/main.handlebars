@@ -12,12 +12,15 @@
 </head>
 
 <body class="flex-column min-100-vh">
-  <nav class="navbar">
+  <nav class="navbar pt-3">
     <ul>
       <li class="li-inline nav-item"><a href="/">Home</a></li>
+      {{#if logged_in}}
       <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
-      <li class="li-inline nav-item"><a href="/login">Login</a></li>
-      <li class="li-inline nav-item"><a href="#" id="logout-link">Logout</a></li>
+      <li class="li-inline nav-item"><a id="logout-link">Logout</a></li>
+      {{else}}
+      <li class="li-inline nav-item"><a id="login-link" href="/login">Login</a></li>
+      {{/if}}
     </ul>
   </nav>
   <header class="hero">
@@ -32,6 +35,7 @@
     &copy; The Tech Blog Folks
   </footer>
 </body>
+
 {{#if logged_in}}
 <script src="/js/logout.js"></script>
 {{/if}}

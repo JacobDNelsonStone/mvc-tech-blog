@@ -11,11 +11,12 @@
           <p>{{post.post_text}}</p>
 
         </div>
-        <div class="card card-body card-rounded">
+        <div data-id="{{post.id}}" class="card card-body card-rounded">
           <p>Posted On: {{post.post_date}}</p>
         </div>
         <div class="card card-footer">
           {{> comments}}
+          {{#if logged_in}}
           <form class="form login-form">
             <div class="form-group">
               <label for="comment-form">Comment:</label>
@@ -25,6 +26,7 @@
               </div>
             </div>
           </form>
+          {{/if}}
         </div>
       </div>
     </div>

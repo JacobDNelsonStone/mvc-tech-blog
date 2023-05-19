@@ -1,3 +1,42 @@
+<h1>Your Posts</h1>
+
+{{#each posts as |post| }}
+<div class="flex-column flex-no-wrap col-xl-12 align-center">
+  <div class="w-100">
+    <div class="">
+      <div class="card p-4 card-rounded">
+        <div class="card card-header">
+          <h2>Author: {{post.User.name}} </h2>
+          <h2>{{post.post_title}} </h2>
+        </div>
+        <div class="card card-body card-rounded">
+          <p>{{post.post_text}}</p>
+
+        </div>
+        <div data-id="{{post.id}}" class="card card-body card-rounded">
+          <p>Posted On: {{post.post_date}}</p>
+        </div>
+        <div class="card card-footer">
+          {{> comments}}
+          {{#if logged_in}}
+          <form class="form login-form">
+            <div class="form-group">
+              <label for="comment-form">Comment:</label>
+              <input name="comment-body" class="form-input" type="text" placeholder="comment text goes here" />
+              <div class="form-group">
+                <button id="commentButton" class="btn btn-primary" type="submit">Comment</button>
+              </div>
+            </div>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
+
+
 <div class="hidden newpost">
   <center><section class="col-xl-12 w-100 py-5 display-flex flex-column align-around">
     <div class="">

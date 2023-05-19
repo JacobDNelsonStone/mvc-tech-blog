@@ -1,5 +1,6 @@
-
+{{#each Comments as |comment|}}
 <article class="card card-footer card-rounded">
-  <p>Author: {{post.Comments.User.name}}</p>
-  <p>Comment: {{post.Comments.comment}}</p>
+  <p>Author: {{comment.User.name}}</p>
+  <p>Comment: {{comment.comment}}</p>
 </article>
+{{/each}}

@@ -12,33 +12,24 @@ router.get('/', async (req, res) => {
         order: [['name', 'ASC']],
       },
       {      
-        model: Comments
-      }  
+        model: Comments,
+        include: [{
+          model: User
+        }]
+      }
       ],
     });
-    console.log(postData)
+    // console.log(postData[0].Comments)
 
     const posts = postData.map((post) => post.get({ plain: true }));
     
-    console.log(posts);
+    console.log(posts.Comments);
 
-    // const commentData = await Comments.findAll({
-    //   include: [{
-    //     model: User,
-    //     attributes: { exclude: ['password'] },
-    //     order: [['name', 'ASC']],
-    //   }]
-    // });
-    // console.log(commentData)
-
-    // const commentss = commentData.map((comment) => comment.get({ plain: true }));
-    
-    // console.log(commentss);
     res.render('homepage', {
       posts,
+      logged_in: req.session.logged_in,
       // commentss
       // Pass the logged in flag to the template
-      // logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -48,26 +39,26 @@ router.get('/', async (req, res) => {
 router.get('/dashboard', withAuth, async (req, res) => {
   console.log('route seen');
   try {
-    const userData = await User.findOne({
+    const postData = await Post.findAll({
       where: {id: req.session.user_id},
       include: [{
-        model: Post
+        model: User,
+        attributes: { exclude: ['password'] },
+        order: [['name', 'ASC']],
       }],
-      attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
 
     });
-    console.log(userData)
+    console.log(postData)
 
-    const users = userData.get({ plain: true });
+    const posts = postData.map((post) => post.get({ plain: true }));
 
-    console.log(users);
+    console.log(posts);
 
     res.render('newpost', {
       layout: 'dashboard',
-      users,
+      posts,
       // Pass the logged in flag to the template
-      // logged_in: req.session.logged_in,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
   console.log(err)
