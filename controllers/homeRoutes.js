@@ -22,11 +22,15 @@ router.get('/', async (req, res) => {
     // console.log(postData[0].Comments)
 
     const posts = postData.map((post) => post.get({ plain: true }));
-    
+
+    const posts2 = posts.map( (post) => ({...post, logged_in: req.session.logged_in}) );
+
     console.log(posts.Comments);
 
+    console.log(posts2)
+    
     res.render('homepage', {
-      posts,
+      posts2,
       logged_in: req.session.logged_in,
       // commentss
       // Pass the logged in flag to the template
@@ -51,7 +55,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     console.log(postData)
 
     const posts = postData.map((post) => post.get({ plain: true }));
-
+    
     console.log(posts);
 
     res.render('newpost', {
