@@ -55,12 +55,15 @@ router.get('/dashboard', withAuth, async (req, res) => {
     console.log(postData)
 
     const posts = postData.map((post) => post.get({ plain: true }));
+
+    const posts2 = posts.map( (post) => ({...post, logged_in: req.session.logged_in}) );
+
     
     console.log(posts);
 
     res.render('newpost', {
       layout: 'dashboard',
-      posts,
+      posts2,
       // Pass the logged in flag to the template
       logged_in: req.session.logged_in,
     });
@@ -70,14 +73,14 @@ router.get('/dashboard', withAuth, async (req, res) => {
 }
 });
 
-router.get('/login', (req, res) => {
+router.get('/signup', (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
     res.redirect('/');
     return;
   }
 
-  res.render('login');
+  res.render('signup');
 });
 
 module.exports = router;
