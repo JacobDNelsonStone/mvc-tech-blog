@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
       include: [{
         model: User,
         attributes: { exclude: ['password'] },
-        order: [['name', 'ASC']],
+        order: [['username', 'ASC']],
       },
       {      
         model: Comments,
@@ -48,7 +48,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
       include: [{
         model: User,
         attributes: { exclude: ['password'] },
-        order: [['name', 'ASC']],
+        order: [['username', 'ASC']],
       }],
 
     });
