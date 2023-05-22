@@ -10,4 +10,4 @@ To use this web app, simply open the heroku link below and have fun!
 
 ## Links
 
-[Link to the liv webpage]()
+[Link to the live webpage](https://mvc-tech-blog-jacobdnelsonston.herokuapp.com/)
