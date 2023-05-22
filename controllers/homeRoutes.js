@@ -42,13 +42,14 @@ router.get('/', async (req, res) => {
 
 router.get('/dashboard', withAuth, async (req, res) => {
   console.log('route seen');
+  console.log(req.session.user_id);
+  
   try {
     const postData = await Post.findAll({
-      where: {id: req.session.user_id},
+      where: {user_id: req.session.user_id},
       include: [{
         model: User,
         attributes: { exclude: ['password'] },
-        order: [['username', 'ASC']],
       }],
 
     });
